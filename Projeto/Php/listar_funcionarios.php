@@ -38,6 +38,6 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
         <?php endforeach; ?>
     </table>
-    <a href="index.html">Voltar ao Painel</a>
+    <a href="/Projeto/pages/SitePHP.html">Voltar ao Painel</a>
 </body>
 </html>
