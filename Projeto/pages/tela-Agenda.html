@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Compromissos</title>
+    
+    <!-- Link para o Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="/Projeto/styles/tela-Agenda/tela-Agenda.css">
+</head>
+<body>
+
+    <div id="calendar-container">
+        <h2>Agenda de Compromissos</h2>
+        
+        <!-- Navegação do calendário -->
+        <div id="calendar-navigation">
+            <button onclick="changeMonth(-1)">&#8592;</button>
+            <span id="current-month-year"></span>
+            <button onclick="changeMonth(1)">&#8594;</button>
+        </div>
+
+        <div id="calendar"></div>
+
+        <!-- Pop-up para adicionar compromisso -->
+        <div id="event-popup" class="event-popup">
+            <h3>Adicionar Compromisso</h3>
+            <label for="client-name">Nome do Cliente:</label>
+            <input type="text" id="client-name" placeholder="Nome do cliente">
+
+            <label for="appointment-time">Horário:</label>
+            <input type="time" id="appointment-time">
+
+            <label for="appointment-description">Descrição:</label>
+            <textarea id="appointment-description" placeholder="Descrição do compromisso"></textarea>
+
+            <button onclick="saveAppointment()">Salvar Compromisso</button>
+            <button onclick="closePopup()">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="/Projeto/javascript/Agenda.js"></script>
+</body>
+</html>

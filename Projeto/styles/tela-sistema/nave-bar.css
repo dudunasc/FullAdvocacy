@@ -166,26 +166,3 @@ main {
     gap: 14px;
 }
 
-/* Caixa Para se centralizada*/
-.container {
-    display: flex;
-    flex-wrap: wrap; /* Permite que as divs quebrem para a próxima linha */
-    justify-content: center; /* Centraliza as divs dentro da .container */
-    width: 1200px; /* Largura da div principal */
-    margin: auto; /* Centraliza a div verticalmente e horizontalmente */
-    gap: 23px;
-}
-
-.box {
-    width: 360px; /* Largura das divs internas */
-    height: 280px; /* Altura das divs internas */
-    margin: 5px; /* Espaço entre as divs */
-}
-
-
-.box1 { background-color: #FF5733; }
-.box2 { background-color: #33FF57; }
-.box3 { background-color: #3357FF; }
-.box4 { background-color: #F333FF; }
-.box5 { background-color: #33FFF5; }
-.box6 { background-color: #FF33A1; }
