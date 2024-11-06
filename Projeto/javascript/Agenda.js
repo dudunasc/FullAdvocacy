@@ -1,92 +1,100 @@
-let currentMonth = new Date().getMonth(); // Mês atual (0-11)
-let currentYear = new Date().getFullYear(); // Ano atual
-
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
 let selectedDate = null;
+let appointments = {}; // Objeto para armazenar compromissos
 
 // Função para gerar o calendário
 function generateCalendar() {
     const calendar = document.getElementById('calendar');
     const currentMonthYear = document.getElementById('current-month-year');
 
-    // Definir o primeiro dia do mês
-    const firstDay = new Date(currentYear, currentMonth, 1);
-    const lastDay = new Date(currentYear, currentMonth + 1, 0);
-    const lastDate = lastDay.getDate();
-
-    // Exibir mês e ano no topo
+    // Meses e dias da semana
     const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    currentMonthYear.innerHTML = `${months[currentMonth]} ${currentYear}`;
-
-    // Cabeçalhos dos dias da semana
     const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    let calendarHTML = '<div class="calendar-header">';
-    for (let i = 0; i < 7; i++) {
-        calendarHTML += `<div class="calendar-day">${daysOfWeek[i]}</div>`;
-    }
-    calendarHTML += '</div>';
 
-    // Preencher os dias do mês
+    // Configuração do calendário
+    currentMonthYear.innerHTML = `${months[currentMonth]} ${currentYear}`;
+    calendar.innerHTML = '<div class="calendar-header">' + daysOfWeek.map(day => `<div class="calendar-day">${day}</div>`).join('') + '</div>';
+    
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     let date = 1;
-    for (let i = 0; i < 6; i++) { // 6 linhas para cobrir o mês completo
-        calendarHTML += '<div class="calendar">';
+
+    // Preenchendo o calendário
+    for (let i = 0; i < 6; i++) { // 6 semanas para cobrir o mês
+        let weekHTML = '<div class="calendar">';
         for (let j = 0; j < 7; j++) {
-            if ((i === 0 && j >= firstDay.getDay()) || (i > 0 && date <= lastDate)) {
-                const currentDay = (i === 0 && j >= firstDay.getDay()) ? date++ : date++;
-                const todayClass = currentDay === new Date().getDate() && currentMonth === new Date().getMonth() && currentYear === new Date().getFullYear() ? 'today' : '';
-                calendarHTML += `<div class="calendar-day ${todayClass}" onclick="selectDate(${currentDay})">${currentDay}</div>`;
+            if ((i === 0 && j < firstDay) || date > daysInMonth) {
+                weekHTML += '<div class="calendar-day"></div>';
             } else {
-                calendarHTML += `<div class="calendar-day"></div>`;
+                const dayKey = `${currentYear}-${currentMonth}-${date}`;
+                const hasAppointment = appointments[dayKey] ? 'has-appointment' : '';
+                weekHTML += `<div class="calendar-day ${hasAppointment}" onclick="selectDate(${date})">${date}</div>`;
+                date++;
             }
         }
-        calendarHTML += '</div>';
+        weekHTML += '</div>';
+        calendar.innerHTML += weekHTML;
     }
-    calendar.innerHTML = calendarHTML;
+    displayAppointments();
 }
 
-// Função para selecionar uma data e mostrar o pop-up
+// Função para exibir a lista de compromissos
+function displayAppointments() {
+    const list = document.getElementById('appointments-list');
+    list.innerHTML = '';
+
+    for (const key in appointments) {
+        const [year, month] = key.split('-');
+        if (parseInt(year) === currentYear && parseInt(month) == currentMonth) {
+            appointments[key].forEach(app => {
+                const item = document.createElement('li');
+                item.textContent = `Dia ${key.split('-')[2]} - ${app.time.replace(":", "H:")}min - Nome: ${app.client} - Descrição: ${app.description}`;
+                list.appendChild(item);
+            });
+        }
+    }
+}
+
+// Função para selecionar uma data
 function selectDate(day) {
     selectedDate = day;
-    const selectedDay = document.querySelectorAll('.calendar-day');
-    selectedDay.forEach(day => day.classList.remove('selected'));
-    document.querySelector(`[onclick="selectDate(${day})"]`).classList.add('selected');
-
-    // Exibir pop-up para adicionar evento
-    const popup = document.getElementById('event-popup');
-    popup.style.display = 'block';
+    document.getElementById('event-popup').style.display = 'block';
 }
 
-// Função para salvar evento
+// Função para salvar o compromisso
 function saveAppointment() {
     const clientName = document.getElementById('client-name').value;
     const appointmentTime = document.getElementById('appointment-time').value;
     const description = document.getElementById('appointment-description').value;
 
     if (clientName && appointmentTime && description && selectedDate) {
-        alert(`Compromisso agendado com ${clientName} para o dia ${selectedDate} às ${appointmentTime}`);
-
-        // Fechar pop-up
-        document.getElementById('event-popup').style.display = 'none';
-        clearPopupFields();
-        generateCalendar(); // Regerar o calendário para mostrar compromissos
+        const dateKey = `${currentYear}-${currentMonth}-${selectedDate}`;
+        if (!appointments[dateKey]) {
+            appointments[dateKey] = [];
+        }
+        appointments[dateKey].push({ client: clientName, time: appointmentTime, description });
+        closePopup();
+        generateCalendar();
     } else {
         alert('Por favor, preencha todos os campos.');
     }
 }
 
-// Função para fechar o pop-up sem salvar
+// Função para fechar o pop-up
 function closePopup() {
     document.getElementById('event-popup').style.display = 'none';
     clearPopupFields();
 }
 
-// Função para limpar os campos do pop-up
+// Função para limpar campos do pop-up
 function clearPopupFields() {
     document.getElementById('client-name').value = '';
     document.getElementById('appointment-time').value = '';
     document.getElementById('appointment-description').value = '';
 }
 
-// Função para mudar de mês
+// Função para mudar o mês
 function changeMonth(direction) {
     currentMonth += direction;
     if (currentMonth > 11) {
@@ -100,5 +108,5 @@ function changeMonth(direction) {
     generateCalendar();
 }
 
-// Gerar o calendário ao carregar a página
+// Inicializar o calendário ao carregar a página
 window.onload = generateCalendar;
