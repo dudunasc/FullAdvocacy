@@ -45,9 +45,22 @@ h2 {
     transition: background-color 0.3s ease;
 }
 
+.btn-voltar {
+    position: absolute;
+    margin-left: 700px;
+    margin-bottom: 130px;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
 #calendar-navigation button:hover {
     background-color: #45a049;
 }
+
+
 
 #calendar-navigation span {
     font-size: 18px;
@@ -212,3 +225,4 @@ h2 {
     padding-left: 5px;
     border-left: 3px solid #e0e0e0;
 }
+

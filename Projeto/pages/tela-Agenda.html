@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="/Projeto/styles/tela-Agenda/tela-Agenda.css">
 </head>
 <body>
-
     <div id="calendar-container">
         <h2>Agenda de Compromissos</h2>
         
@@ -19,6 +18,12 @@
             <button onclick="changeMonth(-1)">&#8592;</button>
             <span id="current-month-year"></span>
             <button onclick="changeMonth(1)">&#8594;</button>
+            <button class="btn-voltar" onclick="voltar()">x</button>
+            <script>
+                function voltar() {
+                  window.history.back(); 
+                }
+              </script>
         </div>
 
         <div id="calendar"></div>
