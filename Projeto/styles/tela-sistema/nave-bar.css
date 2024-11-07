@@ -166,3 +166,34 @@ main {
     gap: 14px;
 }
 
+.container-interno {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(231, 227, 227, 0.863);
+    height: 250px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.container-interno h5 {
+    font-weight: bold;
+}
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 20px;
+}
+
+.container-interno-link {
+    text-decoration: none;
+    color: inherit;
+}
+.container-interno-link:hover .container-interno {
+    background-color: #4F46E5; 
+    cursor: pointer;
+}
