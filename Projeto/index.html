@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard do Sistema de Gestão de Advocacia">
+    <meta name="keywords" content="Dashboard, Sistema, Advogados, Gestão">
+    <meta name="author" content="João Nicolas">
     <title>Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/tela-sistema/nave-bar.css">
+    <link rel="stylesheet" href="styles/tela-sistema/nave-bar.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <input type="checkbox" id="menu-toggle">
+    <input type="checkbox" id="menu-toggle" aria-label="Abrir menu">
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="side-header">
@@ -16,16 +21,16 @@
         </div>
         <div class="side-content">
             <div class="profile">
-                <div class="profile-img bg-img" style="background-image: url('img/escritorio-para-advogados.jpeg');"></div>
+                <div class="profile-img bg-img" style="background-image: url('img/escritorio-para-advogados.jpeg');" aria-label="Imagem de perfil"></div>
                 <h4>João Nicolas</h4>
                 <small>Administrador</small>
             </div>
             <div class="side-menu">
                 <ul>
-                    <li><a href="#" class="active"><span class="icon">&#x1F4C9;</span><small>Analytics</small></a></li>
-                    <li><a href="#"><span class="icon">&#x1F4C4;</span><small>Documentos</small></a></li>
-                    <li><a href="#"><span class="icon">&#x1F6E0;;</span><small>Configurações</small></a></li>
-                    <li><a href="#"><span class="icon">&#x1F9D1;</span><small>Usuários</small></a></li>
+                    <li><a href="#" class="active"><span class="icon fas fa-chart-line"></span><small>Analytics</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-file-alt"></span><small>Documentos</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-cogs"></span><small>Configurações</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-users"></span><small>Usuários</small></a></li>
                 </ul>
             </div>
         </div>
@@ -38,16 +43,16 @@
                 <label for="menu-toggle"><span>&#9776;</span></label>
 
                 <div class="user">
-                    <div class="client-img bg-img" style="background-image: url('client.jpg');"></div>
+                    <div class="client-img bg-img" style="background-image: url('client.jpg');" aria-label="Imagem do cliente"></div>
                 </div>
             </div>
             <div class="header-menu">
-                <label for="calendar">
-                    <span>&#x1F4C5;</span>
+                <label for="calendar" aria-label="Abrir calendário">
+                    <span class="fas fa-calendar-alt"></span>
                 </label>
 
                 <div class="notify-icon">
-                    <span>&#128276;</span>
+                    <span class="fas fa-bell"></span>
                 </div>
             </div>
         </header>
@@ -118,7 +123,7 @@
                             <button>Adicionar</button>
                         </div>
                         <div class="browse">
-                            <input type="text" placeholder="Buscar...">
+                            <input type="text" placeholder="Buscar..." aria-label="Buscar registros">
                             <select>
                                 <option>Filtrar</option>
                             </select>
@@ -147,7 +152,6 @@
                                     <td>(11) 98888-8888</td>
                                     <td>09/11/2024</td>
                                 </tr>
-                                <!-- Mais dados aqui -->
                             </tbody>
                         </table>
                     </div>
