@@ -1,11 +1,9 @@
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo do body */
 body {
     display: flex;
     align-items: center;
@@ -16,7 +14,6 @@ body {
     color: #333;
 }
 
-/* Estilo do container */
 .container {
     background-color: #ffffff;
     border-radius: 8px;
@@ -28,21 +25,18 @@ body {
     border-top: 5px solid #ff5722; /* Barra de cor no topo para um toque de cor */
 }
 
-/* Título */
 h1 {
     font-size: 22px;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* Estilo do formulário */
 form {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* Campos de entrada */
 input {
     padding: 12px;
     border: 1px solid #ccc;
@@ -58,7 +52,6 @@ input:focus {
     box-shadow: 0 0 5px rgba(255, 87, 34, 0.2);
 }
 
-/* Botão de envio */
 button {
     padding: 12px;
     font-size: 15px;
