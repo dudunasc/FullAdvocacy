@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Usuários</title>
+    <link rel="stylesheet" href="../styles/tela-sistema/Opc-Configuracao.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Configurações de Usuários</h1>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar usuário...">
+            <button onclick="searchUser()">Buscar</button>
+        </div>
+
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Cargo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dados dos usuários serão exibidos aqui -->
+            </tbody>
+        </table>
+
+        <!-- Modal para Editar Cargo -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h2>Alterar Cargo</h2>
+                <label for="newRole">Novo Cargo:</label>
+                <select id="newRole">
+                    <option value="Advogado">Advogado</option>
+                    <option value="Estagiário">Estagiário</option>
+                    <option value="Assistente">Assistente</option>
+                </select>
+                <button onclick="saveRole()">Salvar</button>
+                <button onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Modal de Confirmação de Exclusão -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h2>Tem certeza que deseja excluir este usuário?</h2>
+                <button onclick="confirmDelete()">Excluir</button>
+                <button onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
