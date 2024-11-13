@@ -1,17 +1,158 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle</title>
+    <meta name="description" content="Dashboard do Sistema de Gestão de Advocacia">
+    <meta name="keywords" content="Página inicial, Usuários, Documentos, Configurações">
+    <meta name="author" content="João Nicolas">
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/tela-sistema/nave-bar.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+      </svg>
 </head>
 <body>
-    <h1>Painel de Controle</h1>
-    <p>Selecione uma opção:</p>
-    <ul>
-        <li><a href="cadastro_advogado.html">Cadastrar Advogado</a></li>
-        <li><a href="cadastro_funcionario.html">Cadastrar Funcionário Comum</a></li>
-        <li><a href="listar_funcionarios.php">Listar Funcionários Cadastrados</a></li>
-    </ul>
+    <input type="checkbox" id="menu-toggle" aria-label="Abrir menu">
+   
+    <div class="sidebar">
+        <div class="side-header">
+            <h3><span>Sistema</span></h3>
+        </div>
+        <div class="side-content">
+            <div class="profile">
+                <div class="profile-img bg-img" style="background-image: url('img/escritorio-para-advogados.jpeg');" aria-label="Imagem de perfil"></div>
+                <h4>João Nicolas</h4>
+                <small>Administrador</small>
+            </div>
+            <div class="side-menu">
+                <ul>
+                    <li><a href="#" class="active"><span class="icon fas fa-chart-line"></span><small>Página inicial</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-users"></span><small>Usuários</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-file-alt"></span><small>Documentos</small></a></li>
+                    <li><a href="#"><span class="icon fas fa-cogs"></span><small>Configurações</small></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <div class="header-content">
+                <label for="menu-toggle"><span>&#9776;</span></label>
+
+                <div class="user">
+                    <div class="client-img bg-img" style="background-image: url('client.jpg');" aria-label="Imagem do cliente"></div>
+                </div>
+            </div>
+            <div class="header-menu">
+                <label for="calendar" aria-label="Abrir calendário">
+                    <span class="fas fa-calendar-alt"></span>
+                </label>
+
+                <div class="notify-icon">
+                    <span class="fas fa-bell"></span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="page-header">
+                <h1>Bem-vindo</h1>
+                <small>A justiça é um direito de todos, lutar por ela é nossa vocação.</small>
+            </div>
+            <div class="page-content">
+                <div class="analytics">
+                    <div class="card">
+                        <div class="card-head">
+                            <h2>Agenda</h2>
+                            <i class="bi bi-calendar-check"></i>
+                            
+                        </div>
+                        <div class="card-progress">
+                            <div src="../Projeto/styles/icons/calendar-svg">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <h2>Clientes</h2>
+                        </div>
+                        <div class="card-progress">
+                            <div class="card-indicator">
+                                <div class="indicator two" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <h2>Audiências</h2>
+                        </div>
+                        <div class="card-progress">
+                            <div class="card-indicator">
+                                <div class="indicator three" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-head">
+                            <h2>Casos arquivados</h2>
+                        </div>
+                        <div class="card-progress">
+                            <div class="card-indicator">
+                                <div class="indicator four" style="width: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Registros -->
+                <div class="records">
+                    <div class="record-header">
+                        <div class="add">
+                            <button>Adicionar</button>
+                        </div>
+                        <div class="browse">
+                            <input type="text" placeholder="Buscar..." aria-label="Buscar registros">
+                            <select>
+                                <option>Filtrar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>João</td>
+                                    <td>joao@email.com</td>
+                                    <td>(11) 99999-9999</td>
+                                    <td>10/11/2024</td>
+                                </tr>
+                                <tr>
+                                    <td>Ana</td>
+                                    <td>ana@email.com</td>
+                                    <td>(11) 98888-8888</td>
+                                    <td>09/11/2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

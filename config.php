@@ -1,13 +1,14 @@
 <?php
-$host = 'localhost';
-$db = 'advocacia';
-$user = 'root'; // Substitua pelo seu usuário do MySQL
-$pass = ''; // Substitua pela sua senha do MySQL
+$host = 'localhost';    // Endereço do servidor
+$db = 'advocacia';      // Nome do banco de dados
+$user = 'root';         // Usuário padrão do MySQL no XAMPP
+$pass = '';             // Senha padrão do MySQL (em branco)
 
 try {
     $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Conexão com o banco de dados bem-sucedida!";
 } catch (PDOException $e) {
-    echo "Conexão falhou: " . $e->getMessage();
+    echo "Erro de conexão: " . $e->getMessage();  // Exibe erro de conexão, se houver
 }
 ?>

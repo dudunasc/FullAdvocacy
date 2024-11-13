@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f4f6; /* Fundo cinza claro */
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 35px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 5px solid #ff5722; /* Barra de cor no topo para um toque de cor */
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+input:focus {
+    border-color: #ff5722;
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.2);
+}
+
+button {
+    padding: 12px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #ff5722;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e64a19;
+}
+
+/* Link para cadastrar advogado */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ff5722;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #e64a19;
+}
