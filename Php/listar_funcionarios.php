@@ -28,13 +28,13 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
         <?php foreach ($funcionarios as $funcionario): ?>
         <tr>
-            <td><?php echo $funcionario['id']; ?></td>
-            <td><?php echo $funcionario['nome']; ?></td>
-            <td><?php echo $funcionario['perfil']; ?></td>
-            <td><?php echo $funcionario['numeroOAB'] ? $funcionario['numeroOAB'] : 'N/A'; ?></td>
-            <td><?php echo $funcionario['email']; ?></td>
-            <td><?php echo $funcionario['telefone']; ?></td>
-            <td><?php echo $funcionario['tipo']; ?></td>
+            <td><?php echo htmlspecialchars($funcionario['id']); ?></td>
+            <td><?php echo htmlspecialchars($funcionario['nome']); ?></td>
+            <td><?php echo htmlspecialchars($funcionario['perfil']); ?></td>
+            <td><?php echo $funcionario['numeroOAB'] ? htmlspecialchars($funcionario['numeroOAB']) : 'N/A'; ?></td>
+            <td><?php echo htmlspecialchars($funcionario['email']); ?></td>
+            <td><?php echo htmlspecialchars($funcionario['telefone']); ?></td>
+            <td><?php echo htmlspecialchars($funcionario['tipo']); ?></td>
         </tr>
         <?php endforeach; ?>
     </table>
