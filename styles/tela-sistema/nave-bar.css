@@ -446,4 +446,9 @@ tbody tr:hover {
     color: var(--main-color);
 }
 
+.card-button {
+    text-decoration: none; 
+    color: inherit; 
+}
+
 

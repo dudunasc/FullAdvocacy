@@ -44,16 +44,43 @@ function displayAppointments() {
     const list = document.getElementById('appointments-list');
     list.innerHTML = '';
 
-    for (const key in appointments) {
-        const [year, month] = key.split('-');
-        if (parseInt(year) === currentYear && parseInt(month) == currentMonth) {
-            appointments[key].forEach(app => {
-                const item = document.createElement('li');
-                item.textContent = `Dia ${key.split('-')[2]} - ${app.time.replace(":", "H:")}min - Nome: ${app.client} - Descrição: ${app.description}`;
-                list.appendChild(item);
-            });
-        }
-    }
+    // Organizar os compromissos por data, hora e nome do cliente
+    const sortedAppointments = Object.keys(appointments)
+        .filter(dateKey => {
+            // Filtra os compromissos apenas para o mês e ano atuais
+            const [year, month] = dateKey.split('-').map(num => parseInt(num));
+            return year === currentYear && month === currentMonth;
+        })
+        .sort() // Organiza por data
+        .map(dateKey => {
+            appointments[dateKey] = appointments[dateKey]
+                .sort((a, b) => {
+                    // Ordena primeiro por horário (hora e minuto)
+                    const timeA = a.time.split(':').map(num => parseInt(num));
+                    const timeB = b.time.split(':').map(num => parseInt(num));
+                    if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0]; // Ordena por hora
+                    return timeA[1] - timeB[1]; // Ordena por minuto
+                })
+                .sort((a, b) => a.client.localeCompare(b.client)); // Ordena por nome do cliente
+
+            return { dateKey, appointments: appointments[dateKey] };
+        });
+
+    // Exibir compromissos na lista
+    sortedAppointments.forEach(({ dateKey, appointments }) => {
+        appointments.forEach(app => {
+            const item = document.createElement('li');
+            item.textContent = `Dia ${dateKey.split('-')[2]} - ${app.time.replace(":", "H:")} - Nome: ${app.client} - Descrição: ${app.description}`;
+            
+            // Adicionar o botão de exclusão
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Excluir';
+            deleteButton.onclick = () => deleteAppointment(dateKey, app.time, app.client);
+            item.appendChild(deleteButton);
+
+            list.appendChild(item);
+        });
+    });
 }
 
 // Função para selecionar uma data
@@ -74,11 +101,32 @@ function saveAppointment() {
             appointments[dateKey] = [];
         }
         appointments[dateKey].push({ client: clientName, time: appointmentTime, description });
+        
+        // Salvar compromissos no localStorage
+        saveAppointmentsToLocalStorage();
+        
         closePopup();
         generateCalendar();
     } else {
         alert('Por favor, preencha todos os campos.');
     }
+}
+
+// Função para excluir o compromisso
+function deleteAppointment(dateKey, time, client) {
+    // Filtrar o compromisso a ser excluído
+    appointments[dateKey] = appointments[dateKey].filter(app => !(app.time === time && app.client === client));
+
+    // Se não houver mais compromissos nesse dia, remover a data
+    if (appointments[dateKey].length === 0) {
+        delete appointments[dateKey];
+    }
+
+    // Salvar novamente no localStorage
+    saveAppointmentsToLocalStorage();
+
+    // Atualizar o calendário
+    generateCalendar();
 }
 
 // Função para fechar o pop-up
@@ -108,5 +156,21 @@ function changeMonth(direction) {
     generateCalendar();
 }
 
+// Função para carregar os compromissos do localStorage
+function loadAppointmentsFromLocalStorage() {
+    const savedAppointments = localStorage.getItem('appointments');
+    if (savedAppointments) {
+        appointments = JSON.parse(savedAppointments);
+    }
+}
+
+// Função para salvar compromissos no localStorage
+function saveAppointmentsToLocalStorage() {
+    localStorage.setItem('appointments', JSON.stringify(appointments));
+}
+
 // Inicializar o calendário ao carregar a página
-window.onload = generateCalendar;
+window.onload = function() {
+    loadAppointmentsFromLocalStorage(); // Carregar compromissos do localStorage
+    generateCalendar(); // Gerar o calendário com os compromissos carregados
+};
