@@ -1,18 +1,42 @@
+// Variáveis globais
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let selectedDate = null;
 let appointments = {}; // Objeto para armazenar compromissos
 
+// Função para carregar compromissos do localStorage
+function loadAppointmentsFromLocalStorage() {
+    const savedAppointments = localStorage.getItem('appointments');
+    if (savedAppointments) {
+        try {
+            appointments = JSON.parse(savedAppointments);
+            console.log("Compromissos carregados:", appointments);
+        } catch (error) {
+            console.error('Erro ao carregar compromissos do localStorage:', error);
+            appointments = {}; // Caso haja erro, inicializa como objeto vazio
+        }
+    } else {
+        appointments = {}; // Se não houver dados, inicializa vazio
+    }
+}
+
+// Função para salvar compromissos no localStorage
+function saveAppointmentsToLocalStorage() {
+    try {
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+        console.log("Compromissos salvos no localStorage:", appointments);
+    } catch (error) {
+        console.error('Erro ao salvar compromissos no localStorage:', error);
+    }
+}
+
 // Função para gerar o calendário
 function generateCalendar() {
     const calendar = document.getElementById('calendar');
     const currentMonthYear = document.getElementById('current-month-year');
-
-    // Meses e dias da semana
     const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
     const daysOfWeek = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-    // Configuração do calendário
     currentMonthYear.innerHTML = `${months[currentMonth]} ${currentYear}`;
     calendar.innerHTML = '<div class="calendar-header">' + daysOfWeek.map(day => `<div class="calendar-day">${day}</div>`).join('') + '</div>';
     
@@ -21,7 +45,7 @@ function generateCalendar() {
     let date = 1;
 
     // Preenchendo o calendário
-    for (let i = 0; i < 6; i++) { // 6 semanas para cobrir o mês
+    for (let i = 0; i < 6; i++) {
         let weekHTML = '<div class="calendar">';
         for (let j = 0; j < 7; j++) {
             if ((i === 0 && j < firstDay) || date > daysInMonth) {
@@ -39,40 +63,35 @@ function generateCalendar() {
     displayAppointments();
 }
 
-// Função para exibir a lista de compromissos
+// Função para exibir os compromissos na lista
 function displayAppointments() {
     const list = document.getElementById('appointments-list');
-    list.innerHTML = '';
+    list.innerHTML = ''; // Limpa a lista de compromissos
 
-    // Organizar os compromissos por data, hora e nome do cliente
+    // Organiza compromissos por data (ano-mês-dia)
     const sortedAppointments = Object.keys(appointments)
         .filter(dateKey => {
-            // Filtra os compromissos apenas para o mês e ano atuais
             const [year, month] = dateKey.split('-').map(num => parseInt(num));
-            return year === currentYear && month === currentMonth;
+            return year === currentYear && month === currentMonth; // Filtra pelo mês e ano atuais
         })
         .sort() // Organiza por data
         .map(dateKey => {
-            appointments[dateKey] = appointments[dateKey]
-                .sort((a, b) => {
-                    // Ordena primeiro por horário (hora e minuto)
-                    const timeA = a.time.split(':').map(num => parseInt(num));
-                    const timeB = b.time.split(':').map(num => parseInt(num));
-                    if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0]; // Ordena por hora
-                    return timeA[1] - timeB[1]; // Ordena por minuto
-                })
-                .sort((a, b) => a.client.localeCompare(b.client)); // Ordena por nome do cliente
-
+            appointments[dateKey] = appointments[dateKey].sort((a, b) => {
+                const timeA = a.time.split(':').map(num => parseInt(num));
+                const timeB = b.time.split(':').map(num => parseInt(num));
+                if (timeA[0] !== timeB[0]) return timeA[0] - timeB[0]; // Ordena por hora
+                return timeA[1] - timeB[1]; // Ordena por minuto
+            });
             return { dateKey, appointments: appointments[dateKey] };
         });
 
-    // Exibir compromissos na lista
+    // Exibe os compromissos
     sortedAppointments.forEach(({ dateKey, appointments }) => {
         appointments.forEach(app => {
             const item = document.createElement('li');
             item.textContent = `Dia ${dateKey.split('-')[2]} - ${app.time.replace(":", "H:")} - Nome: ${app.client} - Descrição: ${app.description}`;
-            
-            // Adicionar o botão de exclusão
+
+            // Botão para excluir o compromisso
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Excluir';
             deleteButton.onclick = () => deleteAppointment(dateKey, app.time, app.client);
@@ -83,7 +102,7 @@ function displayAppointments() {
     });
 }
 
-// Função para selecionar uma data
+// Função para selecionar um dia
 function selectDate(day) {
     selectedDate = day;
     document.getElementById('event-popup').style.display = 'block';
@@ -101,32 +120,27 @@ function saveAppointment() {
             appointments[dateKey] = [];
         }
         appointments[dateKey].push({ client: clientName, time: appointmentTime, description });
-        
+
         // Salvar compromissos no localStorage
         saveAppointmentsToLocalStorage();
-        
+
         closePopup();
         generateCalendar();
     } else {
-        alert('Por favor, preencha todos os campos.');
+        alert('Por favor, preencha todos os campos corretamente.');
     }
 }
 
-// Função para excluir o compromisso
+// Função para excluir um compromisso
 function deleteAppointment(dateKey, time, client) {
-    // Filtrar o compromisso a ser excluído
     appointments[dateKey] = appointments[dateKey].filter(app => !(app.time === time && app.client === client));
 
-    // Se não houver mais compromissos nesse dia, remover a data
     if (appointments[dateKey].length === 0) {
-        delete appointments[dateKey];
+        delete appointments[dateKey]; // Remove o dia se não houver mais compromissos
     }
 
-    // Salvar novamente no localStorage
-    saveAppointmentsToLocalStorage();
-
-    // Atualizar o calendário
-    generateCalendar();
+    saveAppointmentsToLocalStorage(); // Salva no localStorage
+    generateCalendar(); // Atualiza o calendário
 }
 
 // Função para fechar o pop-up
@@ -156,21 +170,8 @@ function changeMonth(direction) {
     generateCalendar();
 }
 
-// Função para carregar os compromissos do localStorage
-function loadAppointmentsFromLocalStorage() {
-    const savedAppointments = localStorage.getItem('appointments');
-    if (savedAppointments) {
-        appointments = JSON.parse(savedAppointments);
-    }
-}
-
-// Função para salvar compromissos no localStorage
-function saveAppointmentsToLocalStorage() {
-    localStorage.setItem('appointments', JSON.stringify(appointments));
-}
-
-// Inicializar o calendário ao carregar a página
+// Inicializa o calendário
 window.onload = function() {
-    loadAppointmentsFromLocalStorage(); // Carregar compromissos do localStorage
+    loadAppointmentsFromLocalStorage(); // Carregar compromissos ao carregar a página
     generateCalendar(); // Gerar o calendário com os compromissos carregados
 };
